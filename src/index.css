@@ -109,8 +109,12 @@
    Tailwind theme tokens (inline → resolve to the theme-aware vars)
    ────────────────────────────────────────────────────────────── */
 @theme inline {
-  /* Catppuccin raw palette as utilities (bg-base, text-blue, …) */
-  --color-base: var(--base);
+  /* Catppuccin raw palette as utilities (bg-mantle, text-blue, …).
+     NOTE: `base` is intentionally NOT exposed as a color utility —
+     `--color-base` would generate `.text-base{color:...}` and clobber
+     Tailwind's built-in `text-base` font-size utility (used by shadcn
+     Input / ConclusionPanel), rendering their text the page-bg color.
+     Use `bg-background` / `var(--base)` for the page background instead. */
   --color-mantle: var(--mantle);
   --color-crust: var(--crust);
   --color-surface: var(--surface-0);
