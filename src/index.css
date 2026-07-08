@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+/* Dark is the default theme. `data-theme` is always set on <html>
+   (an inline script in index.html applies the stored choice pre-paint). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+/* ──────────────────────────────────────────────────────────────
+   Catppuccin Frappe (Dark · default) — raw palette
+   ────────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+
+  --base: #303446;
+  --mantle: #292c3c;
+  --crust: #232634;
+  --surface-0: #414559;
+  --surface-1: #51576d;
+  --surface-2: #626880;
+  --text: #c6d0f5;
+  --subtext-1: #b5bfe2;
+  --subtext-0: #a5adce;
+  --overlay-0: #737994;
+  --blue: #8caaee;
+  --mauve: #ca9ee6;
+  --green: #a6d189;
+  --red: #e78284;
+  --yellow: #e5c890;
+  --peach: #ef9f76;
+  --teal: #81c8be;
+  --lavender: #babbf1;
+  --sapphire: #85c1dc;
+  --border-subtle: rgba(198, 208, 245, 0.08);
+  --border-strong: rgba(198, 208, 245, 0.16);
+
+  /* shadcn semantic tokens → Catppuccin (dark) */
+  --background: var(--base);
+  --foreground: var(--text);
+  --card: var(--surface-0);
+  --card-foreground: var(--text);
+  --popover: var(--surface-1);
+  --popover-foreground: var(--text);
+  --primary: var(--blue);
+  --primary-foreground: var(--crust);
+  --secondary: var(--surface-1);
+  --secondary-foreground: var(--text);
+  --muted: var(--surface-1);
+  --muted-foreground: var(--subtext-0);
+  --accent: var(--surface-2);
+  --accent-foreground: var(--text);
+  --destructive: var(--red);
+  --destructive-foreground: var(--crust);
+  --border: var(--border-subtle);
+  --input: var(--surface-2);
+  --ring: var(--blue);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Catppuccin Latte (Light)
+   ────────────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --base: #eff1f5;
+  --mantle: #e6e9ef;
+  --crust: #dce0e8;
+  --surface-0: #ccd0da;
+  --surface-1: #bcc0cc;
+  --surface-2: #acb0be;
+  --text: #4c4f69;
+  --subtext-1: #5c5f77;
+  --subtext-0: #6c6f85;
+  --overlay-0: #9ca0b0;
+  --blue: #1e66f5;
+  --mauve: #8839ef;
+  --green: #40a02b;
+  --red: #d20f39;
+  --yellow: #df8e1d;
+  --peach: #fe640b;
+  --teal: #179299;
+  --lavender: #7287fd;
+  --sapphire: #209fb5;
+  --border-subtle: rgba(76, 79, 105, 0.1);
+  --border-strong: rgba(76, 79, 105, 0.18);
+
+  /* shadcn semantic tokens → Catppuccin (light) */
+  --background: var(--base);
+  --foreground: var(--text);
+  --card: var(--surface-0);
+  --card-foreground: var(--text);
+  --popover: var(--surface-1);
+  --popover-foreground: var(--text);
+  --primary: var(--blue);
+  --primary-foreground: #ffffff;
+  --secondary: var(--surface-1);
+  --secondary-foreground: var(--text);
+  --muted: var(--surface-1);
+  --muted-foreground: var(--subtext-0);
+  --accent: var(--surface-2);
+  --accent-foreground: var(--text);
+  --destructive: var(--red);
+  --destructive-foreground: #ffffff;
+  --border: var(--border-subtle);
+  --input: var(--surface-2);
+  --ring: var(--blue);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Tailwind theme tokens (inline → resolve to the theme-aware vars)
+   ────────────────────────────────────────────────────────────── */
+@theme inline {
+  /* Catppuccin raw palette as utilities (bg-base, text-blue, …) */
+  --color-base: var(--base);
+  --color-mantle: var(--mantle);
+  --color-crust: var(--crust);
+  --color-surface: var(--surface-0);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--text);
+  --color-faint: var(--subtext-0);
+  --color-overlay: var(--overlay-0);
+  --color-blue: var(--blue);
+  --color-mauve: var(--mauve);
+  --color-green: var(--green);
+  --color-red: var(--red);
+  --color-yellow: var(--yellow);
+  --color-peach: var(--peach);
+  --color-teal: var(--teal);
+  --color-lavender: var(--lavender);
+  --color-sapphire: var(--sapphire);
+  --color-line: var(--border-subtle);
+  --color-line-strong: var(--border-strong);
+
+  /* shadcn semantic utilities */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --radius-pill: 9999px;
+
+  --font-sans: ui-rounded, "SF Pro Rounded", system-ui, "PingFang SC",
+    "Noto Sans SC", sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Base layer
+   ────────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv01", "ss01";
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--blue) 30%, transparent);
+    color: var(--text);
+  }
+
+  /* Numbers use monospace tabular figures */
+  .tabular {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+}
