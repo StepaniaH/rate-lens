@@ -6,7 +6,7 @@
 
 ## 当前阶段
 
-**阶段: Task 2 完成（Gate 2 通过，37 测试全绿），进入 Task 3 布局与通用组件**
+**阶段: Task 3 完成（Gate 3 通过，38 测试含 App 渲染冒烟），进入 Task 4 倍率正算模块**
 
 ## 分支策略
 
@@ -36,17 +36,17 @@
 - [x] ⚠️ `useExchangeRate` 的 `defaultRate` 依赖避免重取循环（ref 方案，effect 仅 mount 依赖）
 - [x] 🚧 **Gate 2**: `npx vitest run` 全部通过 + `npm run build` 无错误
 
-### Task 3: 布局与通用组件 ⏱️ ~2h
-- [ ] Header（标题 + 主题切换）
-- [ ] Footer
-- [ ] GlossaryPanel（名词解释折叠面板）
-- [ ] ModeSwitcher（胶囊式模式切换）
-- [ ] StepIndicator（三步流程指示器）
-- [ ] PresetButtons（快捷预设按钮）
-- [ ] FundingInputs（充值/到账输入）
-- [ ] ExchangeRateDisplay（汇率显示/编辑，多 API fallback）
-- [ ] 临时 App.tsx 组装验证
-- [ ] 🚧 **Gate 3**: `npm run build` 无错误 + 组件可渲染不崩溃 + 无回归
+### Task 3: 布局与通用组件 ⏱️ ~2h ✅
+- [x] Header（标题 + 主题切换）
+- [x] Footer
+- [x] GlossaryPanel（名词解释折叠面板）
+- [x] ModeSwitcher（胶囊式模式切换）
+- [x] StepIndicator（三步流程指示器）
+- [x] PresetButtons（快捷预设按钮）
+- [x] FundingInputs（充值/到账输入）
+- [x] ExchangeRateDisplay（汇率显示/编辑，多 API fallback）
+- [x] 临时 App.tsx 组装验证（+ App 渲染冒烟测试）
+- [x] 🚧 **Gate 3**: `npm run build` 无错误 + 组件可渲染不崩溃 + 无回归
 
 ### Task 4: 倍率正算模块 ⏱️ ~2.5h
 - [ ] ForwardCalculator（分组倍率输入 + 计算编排）
