@@ -46,8 +46,8 @@ export function ForwardResultCards({ result }: ForwardResultCardsProps) {
         <div
           key={c.label}
           className={cn(
-            'rounded-lg border border-line bg-card/50 px-4 py-3',
-            'transition-all hover:border-line-strong hover:bg-card',
+            'card-glow rounded-lg border border-line bg-card/50 px-4 py-3',
+            'transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:bg-card',
           )}
         >
           <div className="text-xs text-faint">{c.label}</div>

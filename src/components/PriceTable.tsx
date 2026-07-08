@@ -73,7 +73,7 @@ export function PriceTable({ provider, groupRate, rechargeRatio, rate }: PriceTa
   const hasCtx = groupRate !== null && rechargeRatio !== null && rate !== null
 
   return (
-    <div className="rounded-lg border border-line bg-card/40">
+    <div className="card-glow rounded-lg border border-line bg-card/40">
       <div className="flex items-center justify-between px-4 py-2.5">
         <h3 className="text-sm font-semibold text-fg">价格表 · 实付 ¥ 对比</h3>
         {!hasCtx && (
@@ -81,7 +81,7 @@ export function PriceTable({ provider, groupRate, rechargeRatio, rate }: PriceTa
         )}
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="scroll-mask-x overflow-x-auto">
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="border-y border-line text-xs text-faint">

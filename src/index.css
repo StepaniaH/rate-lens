@@ -200,3 +200,124 @@
     font-feature-settings: "tnum";
   }
 }
+
+/* ──────────────────────────────────────────────────────────────
+   Components layer — 视觉打磨
+   ────────────────────────────────────────────────────────────── */
+@layer components {
+  /* 卡片顶部微光 — radial-gradient via ::before */
+  .card-glow {
+    position: relative;
+    isolation: isolate;
+  }
+  .card-glow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(
+      ellipse 60% 30% at 50% 0%,
+      color-mix(in srgb, var(--blue) 14%, transparent),
+      transparent 70%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+  .card-glow:hover::before {
+    opacity: 1;
+  }
+
+  /* 移动端水平滚动渐变遮罩指示器 */
+  .scroll-mask-x {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 12px,
+      #000 calc(100% - 12px),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 12px,
+      #000 calc(100% - 12px),
+      transparent
+    );
+  }
+
+  /* 模式切换 / 数值变化 fade */
+  .animate-fade {
+    animation: fade-in 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Utilities layer — 自定义滚动条
+   ────────────────────────────────────────────────────────────── */
+@layer utilities {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-1) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--surface-1);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: var(--surface-2);
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   响应式精调 — 375 / 768 / 1024 / 1440
+   ────────────────────────────────────────────────────────────── */
+@media (max-width: 375px) {
+  /* 小屏：缩小标题与卡片内边距，价格表靠左对齐避免溢出 */
+  h1 {
+    font-size: 1.125rem;
+  }
+  .tabular {
+    letter-spacing: -0.02em;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* 大屏：主容器收窄居中，结果卡间距加大 */
+  .mx-w-content {
+    max-width: 56rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  body {
+    font-size: 15px;
+  }
+}

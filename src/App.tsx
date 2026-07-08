@@ -117,6 +117,7 @@ function App() {
 
         {state.mode === 'forward' ? (
           <ForwardCalculator
+            key="forward"
             recharge={state.recharge}
             arrived={state.arrived}
             groupRate={state.groupRate}
@@ -127,6 +128,7 @@ function App() {
           />
         ) : (
           <ReverseCalculator
+            key="reverse"
             recharge={state.recharge}
             arrived={state.arrived}
             rate={rate}

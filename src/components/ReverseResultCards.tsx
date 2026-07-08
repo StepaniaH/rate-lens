@@ -22,7 +22,7 @@ const VERDICT_BADGE: Record<Verdict, string> = {
 
 function RowCard({ row, ratio }: { row: ReverseRowResult; ratio: number | null }) {
   return (
-    <div className="rounded-lg border border-line bg-card/40 px-4 py-3">
+    <div className="card-glow rounded-lg border border-line bg-card/40 px-4 py-3 transition-all duration-200 hover:border-line-strong">
       <div className="flex items-center justify-between gap-2">
         <span className="text-sm font-medium text-fg">{KIND_LABEL[row.kind]}实付</span>
         <span

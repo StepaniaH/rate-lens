@@ -69,7 +69,7 @@ export function ReverseCalculator({
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="animate-fade flex flex-col gap-4">
       <label className="flex flex-col gap-1.5">
         <span className="text-sm font-medium text-fg">参照模型</span>
         <Select

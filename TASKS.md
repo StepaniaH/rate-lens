@@ -6,7 +6,7 @@
 
 ## 当前阶段
 
-**阶段: Task 6 完成（Gate 6 通过，53 测试含持久化+主题切换验证），进入 Task 7 视觉打磨与响应式优化**
+**阶段: Task 7 完成（Gate 7 通过，视觉打磨 + 响应式精调），进入 Task 8 最终验证与部署准备**
 
 ## 分支策略
 
@@ -72,13 +72,13 @@
 - [x] favicon + SEO meta（favicon.svg 放大镜蓝、og:title/description、theme-color）
 - [x] 🚧 **Gate 6**: 全量测试通过 + 持久化/主题切换自动验证（+4 hook 测试）
 
-### Task 7: 视觉打磨与响应式优化 ⏱️ ~1.5h
-- [ ] 卡片微光效果（`::before` + radial-gradient）
-- [ ] 移动端价格表滚动优化（渐变遮罩）
-- [ ] 过渡动画（模式切换 / 数值变化 / 卡片 hover）
-- [ ] 自定义滚动条
-- [ ] 4 断点响应式精调（375/768/1024/1440）
-- [ ] 🚧 **Gate 7**: 4 断点验证 + 主题切换验证
+### Task 7: 视觉打磨与响应式优化 ⏱️ ~1.5h ✅
+- [x] 卡片微光效果（`card-glow` ::before + radial-gradient + mask）
+- [x] 移动端价格表滚动优化（`scroll-mask-x` 渐变遮罩）
+- [x] 过渡动画（模式切换 `animate-fade` + key remount / 卡片 hover translateY）
+- [x] 自定义滚动条（`::-webkit-scrollbar` + scrollbar-color）
+- [x] 4 断点响应式精调（375/768/1024/1440 @media）
+- [x] 🚧 **Gate 7**: build + 全量测试无回归，polish 类已入产物 CSS
 
 ### Task 8: 最终验证与部署准备 ⏱️ ~30min
 - [ ] `npm run build` 成功

@@ -10,7 +10,7 @@ export function ConclusionPanel({ result }: ConclusionPanelProps) {
 
   if (!ready || officialCostRatio === null || equivalentRate === null) {
     return (
-      <div className="rounded-lg border border-dashed border-line px-4 py-4 text-center text-sm text-faint">
+      <div className="animate-fade rounded-lg border border-dashed border-line px-4 py-4 text-center text-sm text-faint">
         请填写充值金额、到账金额、分组倍率与汇率以查看结论
       </div>
     )
@@ -43,7 +43,7 @@ export function ConclusionPanel({ result }: ConclusionPanelProps) {
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-lg border bg-gradient-to-r to-transparent px-5 py-4',
+        'card-glow animate-fade relative overflow-hidden rounded-lg border bg-gradient-to-r to-transparent px-5 py-4',
         verdictBorder,
         verdictBg,
       )}
