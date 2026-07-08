@@ -21,7 +21,7 @@
 
 ### 1.1 色彩 — Catppuccin Frappe / Latte
 
-参照 [tool.s-ark.xyz](https://tool.s-ark.xyz/) 的 Catppuccin 主题。
+采用开源 [Catppuccin](https://catppuccin.com/) 配色（Frappe 深色 / Latte 浅色）。
 
 #### Dark Mode（Catppuccin Frappe · 默认）
 
