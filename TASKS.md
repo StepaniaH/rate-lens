@@ -6,7 +6,7 @@
 
 ## 当前阶段
 
-**阶段: Task 3 完成（Gate 3 通过，38 测试含 App 渲染冒烟），进入 Task 4 倍率正算模块**
+**阶段: Task 4 完成（Gate 4 通过，43 测试含正算 UI 验证），进入 Task 5 扣费反推模块**
 
 ## 分支策略
 
@@ -48,14 +48,14 @@
 - [x] 临时 App.tsx 组装验证（+ App 渲染冒烟测试）
 - [x] 🚧 **Gate 3**: `npm run build` 无错误 + 组件可渲染不崩溃 + 无回归
 
-### Task 4: 倍率正算模块 ⏱️ ~2.5h
-- [ ] ForwardCalculator（分组倍率输入 + 计算编排）
-- [ ] ForwardResultCards（充值比例/等效倍率/占官方成本三卡）
-- [ ] ConclusionPanel（渐变结论面板）
-- [ ] ModelProviderSelector（Claude/GPT 切换）
-- [ ] PriceTable（语义化 pill 颜色 + 响应式）
-- [ ] 增量更新 App.tsx（正算模式）
-- [ ] 🚧 **Gate 4**: 3 个正算 case 手动验证 + 价格表切换正确
+### Task 4: 倍率正算模块 ⏱️ ~2.5h ✅
+- [x] ForwardCalculator（分组倍率输入 + 计算编排）
+- [x] ForwardResultCards（充值比例/等效倍率/占官方成本三卡）
+- [x] ConclusionPanel（渐变结论面板）
+- [x] ModelProviderSelector（Claude/GPT 切换）
+- [x] PriceTable（语义化 pill 颜色 + 响应式 + null "按输入价计费"）
+- [x] 增量更新 App.tsx（正算模式）
+- [x] 🚧 **Gate 4**: 3 个正算 case 自动验证 + 价格表切换正确（+5 UI 测试）
 
 ### Task 5: 扣费反推模块 ⏱️ ~2h
 - [ ] ReverseCalculator（参照模型选择 + 实付输入 + 缓存展开）

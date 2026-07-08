@@ -7,9 +7,10 @@ import { StepIndicator } from '@/components/StepIndicator'
 import { PresetButtons, type Preset } from '@/components/PresetButtons'
 import { FundingInputs } from '@/components/FundingInputs'
 import { ExchangeRateDisplay } from '@/components/ExchangeRateDisplay'
+import { ForwardCalculator } from '@/components/ForwardCalculator'
 import { useTheme } from '@/hooks/use-theme'
 import { useExchangeRate } from '@/hooks/use-exchange-rate'
-import type { CalcMode } from '@/types'
+import type { CalcMode, ModelProvider } from '@/types'
 
 function App() {
   const { theme, toggle } = useTheme()
@@ -19,6 +20,7 @@ function App() {
   const [recharge, setRecharge] = useState('')
   const [arrived, setArrived] = useState('')
   const [groupRate, setGroupRate] = useState('')
+  const [provider, setProvider] = useState<ModelProvider>('claude')
 
   const onPreset = (p: Preset) => {
     if (p.recharge !== undefined) setRecharge(String(p.recharge))
@@ -56,26 +58,21 @@ function App() {
           onRefetch={refetch}
         />
 
-        {mode === 'forward' && (
-          <label className="flex flex-col gap-1.5">
-            <span className="text-sm font-medium text-fg">
-              分组倍率
-            </span>
-            <input
-              type="number"
-              min={0}
-              step="0.01"
-              placeholder="例如 1.1"
-              value={groupRate}
-              onChange={(e) => setGroupRate(e.target.value)}
-              className="tabular h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 md:text-sm"
-            />
-          </label>
+        {mode === 'forward' ? (
+          <ForwardCalculator
+            recharge={recharge}
+            arrived={arrived}
+            groupRate={groupRate}
+            onGroupRate={setGroupRate}
+            rate={rate}
+            provider={provider}
+            onProvider={setProvider}
+          />
+        ) : (
+          <div className="rounded-lg border border-dashed border-line px-4 py-6 text-center text-sm text-faint">
+            [临时] 扣费反推模块将在 Task 5 接入
+          </div>
         )}
-
-        <div className="rounded-lg border border-dashed border-line px-4 py-6 text-center text-sm text-faint">
-          [临时预览] 组件已组装 · 正算/反推模块将在 Task 4–5 接入
-        </div>
       </div>
 
       <Footer />
