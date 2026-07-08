@@ -8,9 +8,18 @@ import { PresetButtons, type Preset } from '@/components/PresetButtons'
 import { FundingInputs } from '@/components/FundingInputs'
 import { ExchangeRateDisplay } from '@/components/ExchangeRateDisplay'
 import { ForwardCalculator } from '@/components/ForwardCalculator'
+import { ReverseCalculator } from '@/components/ReverseCalculator'
 import { useTheme } from '@/hooks/use-theme'
 import { useExchangeRate } from '@/hooks/use-exchange-rate'
-import type { CalcMode, ModelProvider } from '@/types'
+import { parseNum } from '@/lib/utils'
+import type { CalcMode, ModelProvider, PriceKind, ReversePaidInput } from '@/types'
+
+const EMPTY_PAID: ReversePaidInput = {
+  input: null,
+  output: null,
+  cacheWrite: null,
+  cacheRead: null,
+}
 
 function App() {
   const { theme, toggle } = useTheme()
@@ -22,10 +31,18 @@ function App() {
   const [groupRate, setGroupRate] = useState('')
   const [provider, setProvider] = useState<ModelProvider>('claude')
 
+  const [reverseModelId, setReverseModelId] = useState<string | null>(null)
+  const [reversePaid, setReversePaid] = useState<ReversePaidInput>(EMPTY_PAID)
+  const [cacheExpanded, setCacheExpanded] = useState(false)
+
   const onPreset = (p: Preset) => {
     if (p.recharge !== undefined) setRecharge(String(p.recharge))
     if (p.arrived !== undefined) setArrived(String(p.arrived))
     if (p.groupRate !== undefined) setGroupRate(String(p.groupRate))
+  }
+
+  const onPaidField = (kind: PriceKind, value: string) => {
+    setReversePaid((prev) => ({ ...prev, [kind]: parseNum(value) }))
   }
 
   return (
@@ -69,9 +86,17 @@ function App() {
             onProvider={setProvider}
           />
         ) : (
-          <div className="rounded-lg border border-dashed border-line px-4 py-6 text-center text-sm text-faint">
-            [临时] 扣费反推模块将在 Task 5 接入
-          </div>
+          <ReverseCalculator
+            recharge={recharge}
+            arrived={arrived}
+            rate={rate}
+            reverseModelId={reverseModelId}
+            onReverseModelId={setReverseModelId}
+            reversePaid={reversePaid}
+            onPaidField={onPaidField}
+            cacheExpanded={cacheExpanded}
+            onCacheExpanded={setCacheExpanded}
+          />
         )}
       </div>
 

@@ -6,7 +6,7 @@
 
 ## 当前阶段
 
-**阶段: Task 4 完成（Gate 4 通过，43 测试含正算 UI 验证），进入 Task 5 扣费反推模块**
+**阶段: Task 5 完成（Gate 5 通过，49 测试含反推 UI 验证），进入 Task 6 组装 App 与状态管理**
 
 ## 分支策略
 
@@ -57,11 +57,13 @@
 - [x] 增量更新 App.tsx（正算模式）
 - [x] 🚧 **Gate 4**: 3 个正算 case 自动验证 + 价格表切换正确（+5 UI 测试）
 
-### Task 5: 扣费反推模块 ⏱️ ~2h
-- [ ] ReverseCalculator（参照模型选择 + 实付输入 + 缓存展开）
-- [ ] ReverseResultCards（反推结果卡 + verdict badge + 汇总）
-- [ ] 增量更新 App.tsx（反推模式）
-- [ ] 🚧 **Gate 5**: 2 个反推 case 手动验证 + 模式切换正确
+### Task 5: 扣费反推模块 ⏱️ ~2h ✅
+- [x] ReverseCalculator（参照模型选择 + 实付输入 + 缓存展开）
+- [x] ReverseResultCards（反推结果卡 + verdict badge + 汇总）
+- [x] 增量更新 App.tsx（反推模式）
+- [x] 🚧 **Gate 5**: 2 个反推 case 自动验证 + 模式切换正确（+5 UI 测试 +1 单元测试）
+
+> 注：GPT 缓存写入无官方价时，calcReverse 保留该行显示"不适用"而非静默丢弃。
 
 ### Task 6: 组装 App 与状态管理 ⏱️ ~1.5h
 - [ ] App.tsx 最终装配（清理临时代码，连接所有 hooks）

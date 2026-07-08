@@ -83,7 +83,7 @@ export function calcReverse(
     const paidVal = paid[kind]
     if (paidVal === null) continue // 未填写的维度跳过
     const row = calcReverseRow(model, kind, paidVal, ctx)
-    if (row.officialUSD === null) continue // 该维度不适用 (GPT cacheWrite)
+    // 保留不适用行 (如 GPT 缓存写入) → 显示"不适用"，但不计入汇总
     rows.push(row)
   }
 

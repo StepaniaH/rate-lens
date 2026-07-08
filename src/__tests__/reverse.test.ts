@@ -71,4 +71,18 @@ describe('calcReverse', () => {
     expect(s.best?.kind).toBe('input')
     expect(s.worst?.kind).toBe('output')
   })
+
+  it('GPT cacheWrite filled → 保留"不适用"行，不计入汇总', () => {
+    const gpt55 = findModelPricing('gpt-5.5')!
+    // 输入实付 ¥5 (valid) + 缓存写入 ¥10 (GPT 无此项 → na)
+    const s = calcReverse(gpt55, { input: 5, output: null, cacheWrite: 10, cacheRead: null }, ctx)
+    expect(s.rows).toHaveLength(2)
+    const cacheRow = s.rows.find((r) => r.kind === 'cacheWrite')
+    expect(cacheRow?.officialUSD).toBeNull()
+    expect(cacheRow?.verdict).toBe('na')
+    expect(cacheRow?.discountText).toBe('不适用')
+    // avg 只算 valid 行 (input)
+    expect(s.avgGroupRate).not.toBeNull()
+    expect(s.best?.kind).toBe('input')
+  })
 })
