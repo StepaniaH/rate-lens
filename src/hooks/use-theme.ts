@@ -24,6 +24,11 @@ export function useTheme(): {
 } {
   const [theme, setThemeState] = useState<Theme>(readInitial)
 
+  // 保持 DOM data-theme 属性与 state 同步 (兜底，即使 pre-paint 脚本未执行)
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+  }, [theme])
+
   const apply = useCallback((t: Theme) => {
     document.documentElement.setAttribute('data-theme', t)
     try {

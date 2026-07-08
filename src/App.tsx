@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback } from 'react'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { GlossaryPanel } from '@/components/GlossaryPanel'
@@ -11,8 +11,27 @@ import { ForwardCalculator } from '@/components/ForwardCalculator'
 import { ReverseCalculator } from '@/components/ReverseCalculator'
 import { useTheme } from '@/hooks/use-theme'
 import { useExchangeRate } from '@/hooks/use-exchange-rate'
+import { useLocalStorage } from '@/hooks/use-local-storage'
 import { parseNum } from '@/lib/utils'
-import type { CalcMode, ModelProvider, PriceKind, ReversePaidInput } from '@/types'
+import type {
+  AppState,
+  CalcMode,
+  ModelProvider,
+  PriceKind,
+  ReversePaidInput,
+} from '@/types'
+
+const DEFAULT_STATE: AppState = {
+  mode: 'forward',
+  recharge: '',
+  arrived: '',
+  groupRate: '',
+  exchangeRate: '',
+  provider: 'claude',
+  reverseModelId: null,
+  reversePaid: { input: null, output: null, cacheWrite: null, cacheRead: null },
+  cacheExpanded: false,
+}
 
 const EMPTY_PAID: ReversePaidInput = {
   input: null,
@@ -25,25 +44,43 @@ function App() {
   const { theme, toggle } = useTheme()
   const { rate, loading, source, setManual, refetch } = useExchangeRate(7.2)
 
-  const [mode, setMode] = useState<CalcMode>('forward')
-  const [recharge, setRecharge] = useState('')
-  const [arrived, setArrived] = useState('')
-  const [groupRate, setGroupRate] = useState('')
-  const [provider, setProvider] = useState<ModelProvider>('claude')
+  const [state, setState] = useLocalStorage<AppState>(
+    'ratelens-state',
+    DEFAULT_STATE,
+  )
 
-  const [reverseModelId, setReverseModelId] = useState<string | null>(null)
-  const [reversePaid, setReversePaid] = useState<ReversePaidInput>(EMPTY_PAID)
-  const [cacheExpanded, setCacheExpanded] = useState(false)
+  const patch = useCallback(
+    <K extends keyof AppState>(key: K, value: AppState[K]) => {
+      setState((prev) => ({ ...prev, [key]: value }))
+    },
+    [setState],
+  )
 
-  const onPreset = (p: Preset) => {
-    if (p.recharge !== undefined) setRecharge(String(p.recharge))
-    if (p.arrived !== undefined) setArrived(String(p.arrived))
-    if (p.groupRate !== undefined) setGroupRate(String(p.groupRate))
-  }
+  const onPreset = useCallback(
+    (p: Preset) => {
+      setState((prev) => ({
+        ...prev,
+        ...(p.recharge !== undefined ? { recharge: String(p.recharge) } : {}),
+        ...(p.arrived !== undefined ? { arrived: String(p.arrived) } : {}),
+        ...(p.groupRate !== undefined ? { groupRate: String(p.groupRate) } : {}),
+      }))
+    },
+    [setState],
+  )
 
-  const onPaidField = (kind: PriceKind, value: string) => {
-    setReversePaid((prev) => ({ ...prev, [kind]: parseNum(value) }))
-  }
+  const onPaidField = useCallback(
+    (kind: PriceKind, value: string) => {
+      setState((prev) => ({
+        ...prev,
+        reversePaid: { ...prev.reversePaid, [kind]: parseNum(value) },
+      }))
+    },
+    [setState],
+  )
+
+  const onClearPaid = useCallback(() => {
+    setState((prev) => ({ ...prev, reversePaid: EMPTY_PAID }))
+  }, [setState])
 
   return (
     <div className="mx-auto max-w-4xl px-4 pb-12">
@@ -53,18 +90,21 @@ function App() {
         <GlossaryPanel />
 
         <div className="flex justify-center">
-          <ModeSwitcher mode={mode} onChange={setMode} />
+          <ModeSwitcher
+            mode={state.mode}
+            onChange={(m: CalcMode) => patch('mode', m)}
+          />
         </div>
 
-        <StepIndicator mode={mode} />
+        <StepIndicator mode={state.mode} />
 
-        <PresetButtons mode={mode} onPreset={onPreset} />
+        <PresetButtons mode={state.mode} onPreset={onPreset} />
 
         <FundingInputs
-          recharge={recharge}
-          arrived={arrived}
-          onRecharge={setRecharge}
-          onArrived={setArrived}
+          recharge={state.recharge}
+          arrived={state.arrived}
+          onRecharge={(v) => patch('recharge', v)}
+          onArrived={(v) => patch('arrived', v)}
         />
 
         <ExchangeRateDisplay
@@ -75,28 +115,38 @@ function App() {
           onRefetch={refetch}
         />
 
-        {mode === 'forward' ? (
+        {state.mode === 'forward' ? (
           <ForwardCalculator
-            recharge={recharge}
-            arrived={arrived}
-            groupRate={groupRate}
-            onGroupRate={setGroupRate}
+            recharge={state.recharge}
+            arrived={state.arrived}
+            groupRate={state.groupRate}
+            onGroupRate={(v) => patch('groupRate', v)}
             rate={rate}
-            provider={provider}
-            onProvider={setProvider}
+            provider={state.provider}
+            onProvider={(p: ModelProvider) => patch('provider', p)}
           />
         ) : (
           <ReverseCalculator
-            recharge={recharge}
-            arrived={arrived}
+            recharge={state.recharge}
+            arrived={state.arrived}
             rate={rate}
-            reverseModelId={reverseModelId}
-            onReverseModelId={setReverseModelId}
-            reversePaid={reversePaid}
+            reverseModelId={state.reverseModelId}
+            onReverseModelId={(id) => patch('reverseModelId', id)}
+            reversePaid={state.reversePaid}
             onPaidField={onPaidField}
-            cacheExpanded={cacheExpanded}
-            onCacheExpanded={setCacheExpanded}
+            cacheExpanded={state.cacheExpanded}
+            onCacheExpanded={(v) => patch('cacheExpanded', v)}
           />
+        )}
+
+        {state.mode === 'reverse' && (
+          <button
+            type="button"
+            onClick={onClearPaid}
+            className="self-center text-xs text-faint transition-colors hover:text-red"
+          >
+            清空实付输入
+          </button>
         )}
       </div>
 

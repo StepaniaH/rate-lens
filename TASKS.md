@@ -6,7 +6,7 @@
 
 ## 当前阶段
 
-**阶段: Task 5 完成（Gate 5 通过，49 测试含反推 UI 验证），进入 Task 6 组装 App 与状态管理**
+**阶段: Task 6 完成（Gate 6 通过，53 测试含持久化+主题切换验证），进入 Task 7 视觉打磨与响应式优化**
 
 ## 分支策略
 
@@ -65,12 +65,12 @@
 
 > 注：GPT 缓存写入无官方价时，calcReverse 保留该行显示"不适用"而非静默丢弃。
 
-### Task 6: 组装 App 与状态管理 ⏱️ ~1.5h
-- [ ] App.tsx 最终装配（清理临时代码，连接所有 hooks）
-- [ ] localStorage 持久化集成
-- [ ] `<ErrorBoundary>` 根级包裹
-- [ ] favicon + SEO meta
-- [ ] 🚧 **Gate 6**: 全量集成验证（7 项手动检查 + 全量测试通过）
+### Task 6: 组装 App 与状态管理 ⏱️ ~1.5h ✅
+- [x] App.tsx 最终装配（useLocalStorage 统一管理 AppState，连接所有 hooks）
+- [x] localStorage 持久化集成（单一 'ratelens-state' 对象）
+- [x] `<ErrorBoundary>` 根级包裹（main.tsx）
+- [x] favicon + SEO meta（favicon.svg 放大镜蓝、og:title/description、theme-color）
+- [x] 🚧 **Gate 6**: 全量测试通过 + 持久化/主题切换自动验证（+4 hook 测试）
 
 ### Task 7: 视觉打磨与响应式优化 ⏱️ ~1.5h
 - [ ] 卡片微光效果（`::before` + radial-gradient）
