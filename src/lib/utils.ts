@@ -1,5 +1,8 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import type { Verdict } from '@/types'
+
+export type { Verdict }
 
 /** Merge Tailwind classes with conditional logic. */
 export function cn(...inputs: ClassValue[]): string {
@@ -26,16 +29,33 @@ export function formatPercent(ratio: number, digits = 1): string {
   return `${formatNumber(ratio * 100, digits)}%`
 }
 
-/** Format a signed percentage, e.g. "便宜 12.3%" / "贵 12.3%" / "持平". */
+/**
+ * Classify a signed discount ratio (paid/official − 1) into a verdict.
+ * `flatBand` is the half-width of the "flat" band (default 0.2 → ±20% for
+ * price-table pills; pass 0.005 for tight reverse-badge "持平").
+ */
+export function classifyVerdict(
+  ratio: number | null,
+  flatBand = 0.2,
+): Verdict {
+  if (ratio === null || !Number.isFinite(ratio)) return 'na'
+  if (ratio < -flatBand) return 'cheaper'
+  if (ratio > flatBand) return 'expensive'
+  return 'flat'
+}
+
+/** Format a signed percentage, e.g. "比官方便宜 12.3%" / "比官方贵 12.3%" / "与官方持平". */
 export function formatDiscount(ratio: number, digits = 1): {
   text: string
-  sign: 'cheaper' | 'expensive' | 'flat'
+  sign: Verdict
 } {
-  if (!Number.isFinite(ratio)) return { text: '—', sign: 'flat' }
+  const sign = classifyVerdict(ratio, 0.005)
+  if (!Number.isFinite(ratio)) return { text: '—', sign: 'na' }
+  if (sign === 'flat') return { text: '与官方持平', sign: 'flat' }
   const pct = formatNumber(Math.abs(ratio) * 100, digits)
-  if (Math.abs(ratio) < 0.0005) return { text: '与官方持平', sign: 'flat' }
-  if (ratio < 0) return { text: `比官方便宜 ${pct}%`, sign: 'cheaper' }
-  return { text: `比官方贵 ${pct}%`, sign: 'expensive' }
+  return sign === 'cheaper'
+    ? { text: `比官方便宜 ${pct}%`, sign: 'cheaper' }
+    : { text: `比官方贵 ${pct}%`, sign: 'expensive' }
 }
 
 /** Format a CNY price like "¥25" / "¥12.34". */
@@ -49,3 +69,11 @@ export function formatUSD(value: number, digits = 2): string {
   if (!Number.isFinite(value)) return '—'
   return `$${formatNumber(value, digits)}`
 }
+
+/** Safe division: returns null when inputs are missing or divisor is 0. */
+export function safeDiv(a: number | null, b: number | null): number | null {
+  if (a === null || b === null || b === 0) return null
+  const r = a / b
+  return Number.isFinite(r) ? r : null
+}
+

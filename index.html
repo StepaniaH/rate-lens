@@ -6,11 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RateLens · AI 模型价格倍率计算器</title>
     <script>
-      // Apply stored theme before paint to avoid flash. Default: dark.
+      // Apply stored theme before paint to avoid flash.
+      // Priority: stored choice → system preference → dark (default).
       (function () {
         try {
           var t = localStorage.getItem('ratelens-theme');
-          document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia &&
+              window.matchMedia('(prefers-color-scheme: light)').matches
+              ? 'light' : 'dark';
+          }
+          document.documentElement.setAttribute('data-theme', t);
         } catch (e) {
           document.documentElement.setAttribute('data-theme', 'dark');
         }

@@ -6,35 +6,35 @@
 
 ## 当前阶段
 
-**阶段: 规划完成，等待执行**
+**阶段: Task 2 完成（Gate 2 通过，37 测试全绿），进入 Task 3 布局与通用组件**
 
 ## 分支策略
 
 | 分支 | 用途 | 状态 |
 |------|------|------|
-| `main` | 初始开发 → 首次部署后作为稳定分支 | 待创建 |
+| `main` | 初始开发 → 首次部署后作为稳定分支 | ✅ 已创建，Task 1 已提交 |
 | `dev` | 首次部署稳定后，后续开发在此分支 | 待创建（Task 8 后） |
 
 ## 任务清单
 
-### Task 1: 项目初始化与基础设施 ⏱️ ~30min
-- [ ] Vite + React + TypeScript 项目创建
-- [ ] Tailwind CSS v4 配置
-- [ ] Catppuccin Frappe/Latte 主题变量注入
-- [ ] shadcn/ui 初始化 + 核心组件安装
-- [ ] Vitest 测试框架配置
-- [ ] Git 仓库初始化（main 分支）
-- [ ] 🚧 **Gate 1**: `npm run dev` + `npm run build` + `npx vitest run` 全部通过
+### Task 1: 项目初始化与基础设施 ⏱️ ~30min ✅
+- [x] Vite + React + TypeScript 项目创建
+- [x] Tailwind CSS v4 配置
+- [x] Catppuccin Frappe/Latte 主题变量注入
+- [x] shadcn/ui 初始化 + 核心组件安装
+- [x] Vitest 测试框架配置
+- [x] Git 仓库初始化（main 分支）
+- [x] 🚧 **Gate 1**: `npm run dev` + `npm run build` + `npx vitest run` 全部通过
 
-### Task 2: 数据层、计算逻辑与单元测试 ⏱️ ~2h
-- [ ] TypeScript 类型定义（`types/index.ts`）
-- [ ] 模型定价数据（Claude 5 + GPT/Codex 6）
-- [ ] 正算逻辑 `calcForward()` + `calcPriceCell()`
-- [ ] 反推逻辑 `calcReverse()`（含 verdict 判定）
-- [ ] Hooks: `useLocalStorage` / `useExchangeRate` / `useTheme`
-- [ ] 单元测试: utils (13) + models (9) + forward (8) + reverse (8) ≈ 38 用例
-- [ ] ⚠️ `useExchangeRate` 的 `defaultRate` 依赖避免重取循环
-- [ ] 🚧 **Gate 2**: `npx vitest run` 全部通过 + `npm run build` 无错误
+### Task 2: 数据层、计算逻辑与单元测试 ⏱️ ~2h ✅
+- [x] TypeScript 类型定义（`types/index.ts`）
+- [x] 模型定价数据（Claude 5 + GPT/Codex 6）
+- [x] 正算逻辑 `calcForward()` + `calcPriceCell()`
+- [x] 反推逻辑 `calcReverse()`（含 verdict 判定）
+- [x] Hooks: `useLocalStorage` / `useExchangeRate` / `useTheme`
+- [x] 单元测试: utils (11) + models (9) + forward (9) + reverse (8) = 37 用例
+- [x] ⚠️ `useExchangeRate` 的 `defaultRate` 依赖避免重取循环（ref 方案，effect 仅 mount 依赖）
+- [x] 🚧 **Gate 2**: `npx vitest run` 全部通过 + `npm run build` 无错误
 
 ### Task 3: 布局与通用组件 ⏱️ ~2h
 - [ ] Header（标题 + 主题切换）
